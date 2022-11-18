@@ -1,4 +1,3 @@
-
 def encrypt_caesar(plaintext, key):
     ciphertext = ""
     for char in plaintext:
@@ -30,34 +29,34 @@ def get_order(key):
     columnorder = []
     letter_pos = dict()
 
-    for i, c in enumerate(orderedtxt):
+    for i, c in enumerate(key):
         letter_pos.update({c: i})
     
-    for char in key:
+    for char in orderedtxt:
         columnorder.append(letter_pos.get(char))
-    print(f"Column order: {columnorder}")
+
     return columnorder
 
 
 def encrypt_transpos(plaintext, key):
     columns = len(key)
-    rows = len(plaintext) // columns
-    plaintext = plaintext.replace(" ", "")
+    plaintext = plaintext.replace(" ", "").lower()
+    rows = (len(plaintext) * -1) // columns
+    rows *= -1
     plainlist = []
     plainlist[:0] = plaintext
     column_order = get_order(key)
     ciphertext = ""
-    matrix = [[0 for i in range(columns)] for j in range(rows)]
-    print(matrix)
+    matrix = [[0 for i in range(rows)] for j in range(columns)]
 
-    for c in range(columns):
-        for r in range(rows):
+    for r in range(rows):
+        for c in range(columns):
             if len(plainlist) > 0:
-                matrix[r][c] = plainlist[0]
+                matrix[c][r] = plainlist[0]
                 plainlist.pop(0)
             else:
-                matrix[r][c] = ""
-    print(f"Matrix: {matrix}")
+                matrix[c][r] = " "
+
     for c in column_order:
         for r in range(rows):
             ciphertext += matrix[c][r]
@@ -65,8 +64,32 @@ def encrypt_transpos(plaintext, key):
     return ciphertext
 
 
-def decrypt_transpos(plaintext, key):
-    pass
+def decrypt_transpos(ciphertext, key):
+    columns = len(key)
+    rows = (len(ciphertext) * -1) // columns
+    rows *= -1
+    column_order = get_order(key)
+    cipherlist = []
+    cipherlist[:0] = ciphertext
+    plaintext = ""
+    matrix = [[0 for i in range(rows)] for j in range(columns)]
+
+    for c in column_order:
+        for r in range(rows):
+            if len(cipherlist) > 0:
+                matrix[c][r] = cipherlist[0]
+                cipherlist.pop(0)
+            else:
+                matrix[c][r] = " "
+    
+    for r in range(rows):
+        for c in range(columns):
+            plaintext += matrix[c][r]
+
+    return plaintext
+
+            
+
 
 
 def main():
@@ -80,10 +103,13 @@ def main():
 
     # print(f"Encrypted transposition: ")
     plain = "We are discovered save yourself"
-    key = "author"
+    key = "help"
 
+    print(f"Plaintext: {plain}")
     cipher = encrypt_transpos(plain, key)
     print(f"Ciphertext: {cipher}")
+    deciphered = decrypt_transpos(cipher, "help")
+    print(f"Decrypted plaintext: {deciphered}")
 
 
 if __name__ == "__main__":
