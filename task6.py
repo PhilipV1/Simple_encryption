@@ -1,6 +1,7 @@
 import os
 import random as rd
 
+
 def hash(input):
     ''''Hash function that converts the input to string to
     be able to use the ASCII values'''

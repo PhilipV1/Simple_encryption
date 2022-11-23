@@ -25,6 +25,10 @@ def decrypt_caesar(ciphertext, key):
 
 
 def get_order(key):
+    # Back
+    # Orderedtxt = "abck"
+    #dict = {a: 0, b: 1, c: 2, k: 3}
+    # Jämför "abck"
     orderedtxt = "".join(sorted(key))
     columnorder = []
     letter_pos = dict()
@@ -40,7 +44,7 @@ def get_order(key):
 
 def encrypt_transpos(plaintext, key):
     columns = len(key)
-    plaintext = plaintext.replace(" ", "").lower()
+
     rows = (len(plaintext) * -1) // columns
     rows *= -1
     plainlist = []
