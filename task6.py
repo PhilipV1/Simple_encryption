@@ -36,13 +36,20 @@ def hash_test(table, input_amount):
     print(f"Uniformity = {round(sum, 2)}")
 
 
-def str_to_binary(string):
-    binary = format(ord(string), '08b')
-    print(f"Binary for {string} = {binary}")
+def addOneASCII(string):
+    '''Adds 1 to the ASCII value of the last character
+    in the string and returns a new string with the updated
+    ASCII character'''
+    last_char = string[len(string) - 1]
+    last_char = chr(ord(last_char) + 1)
+    new_string = string[0:-1] + last_char
+
+    return new_string
 
 
 def main():
-    inputValue = '539601837'
+    inputValue = 539601837
+    print(f"ASCII value of 5 is: {ord('5')}")
     random_input = [rd.randint(0, 5000000) for i in range(3000)]
     hash_value = hash(inputValue)
     hash_avalanche = dict()
@@ -59,7 +66,7 @@ def main():
         else:
             hash_avalanche.update({hash_value: 1})
         if type(inputValue) == str:
-            inputValue = str(ord(inputValue) + 1)
+            inputValue = addOneASCII(inputValue)
         else:
             inputValue += 1
 
