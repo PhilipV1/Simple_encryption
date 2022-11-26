@@ -49,7 +49,6 @@ def addOneASCII(string):
 
 def main():
     inputValue = 539601837
-    print(f"ASCII value of 5 is: {ord('5')}")
     random_input = [rd.randint(0, 5000000) for i in range(3000)]
     hash_value = hash(inputValue)
     hash_avalanche = dict()
